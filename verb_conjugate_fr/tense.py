@@ -6,7 +6,8 @@ from .person_ending import PersonEnding
 class Tense:
     """
     Contains PersonEndings for a specific verb template, mood and tense
-    Note: The template name and mood isn't specified because a Tense belongs to a Mood object
+    Note: The template name and mood is only known by the Mood object
+          which owns this Tense.
     Class relationships:
         ConjugationTemplate has many Mood
             Mood has many Tense

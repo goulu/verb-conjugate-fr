@@ -13,6 +13,14 @@ MOOD_TENSES = {
 }
 
 
+def is_valid_mood(mood_name):
+    return mood_name in MOOD_TENSES
+
+
+def is_valid_mood_tense(mood_name, tense_name):
+    return mood_name in MOOD_TENSES and tense_name in MOOD_TENSES[mood_name]
+
+
 class MoodError(Exception):
     pass
 

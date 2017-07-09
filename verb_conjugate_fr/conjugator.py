@@ -21,33 +21,6 @@ class ConjugatorError(Exception):
     pass
 
 
-class Conjugator:
-    def __init__(self):
-        self.vp = VerbsParser()
-        self.cp = ConjugationsParser()
-
-    def get_full_conjugation_string(self, infinitive):
-        ret = ""
-        verb = self.vp.find_verb_by_infinitive(infinitive)
-        print(u'Conjugaison du verbe {}'.format(verb.infinitive))
-        template = self.cp.find_template(verb.template)
-        print(u"Template: {}".format(template.name))
-        verb_stem = get_verb_stem(infinitive, template.name)
-        mood = template.moods['indicative']
-        tense = mood.tenses['present']
-        ret += conjugate_specific_tense(verb_stem, tense)
-        tense = mood.tenses['imperfect']
-        ret += conjugate_specific_tense(verb_stem, tense)
-        tense = mood.tenses['future']
-        ret += conjugate_specific_tense(verb_stem, tense)
-        tense = mood.tenses['simple-past']
-        ret += conjugate_specific_tense(verb_stem, tense)
-        # mood = template.moods['participle']
-        # tense = mood.tenses['present-participle']
-        # ret += conjugate_specific_tense(verb_stem, tense)
-        return ret
-
-
 def get_verb_stem(infinitive, template_name):
     template_beg, template_ending = template_name.split(u':')
     if not infinitive.endswith(template_ending):
@@ -58,23 +31,52 @@ def get_verb_stem(infinitive, template_name):
     return infinitive[:len(infinitive) - len(template_ending)]
 
 
-def conjugate_specific_tense(verb_stem, tense):
-    ret = '{}\n'.format(tense.name)
-    for pronoun in ('je', 'tu', 'il', 'nous', 'vous', 'ils'):
-        person = tense.find_person_by_pronoun(pronoun)
-        ending = person.get_ending()
-        ret += conjugate_specific_tense_pronoun(verb_stem, ending, pronoun)
+class Conjugator:
+    def __init__(self):
+        self.vp = VerbsParser()
+        self.cp = ConjugationsParser()
+
+    def get_full_conjugation_string(self, infinitive):
+        ret = ''
+        verb = self.vp.find_verb_by_infinitive(infinitive)
+        print(u'Conjugaison du verbe {}'.format(verb.infinitive))
+        template = self.cp.find_template(verb.template)
+        print(u"Template: {}".format(template.name))
+        verb_stem = get_verb_stem(infinitive, template.name)
+        return self._get_full_conjugation_string_for_mood(verb_stem, template, 'indicative')
+
+    def _get_full_conjugation_string_for_mood(self, verb_stem, template, mood_name):
+        ret = ''
+        mood = template.moods[mood_name]
+        tense = mood.tenses['present']
+        ret += self._conjugate_specific_tense(verb_stem, tense)
+        tense = mood.tenses['imperfect']
+        ret += self._conjugate_specific_tense(verb_stem, tense)
+        tense = mood.tenses['future']
+        ret += self._conjugate_specific_tense(verb_stem, tense)
+        tense = mood.tenses['simple-past']
+        ret += self._conjugate_specific_tense(verb_stem, tense)
+        # mood = template.moods['participle']
+        # tense = mood.tenses['present-participle']
+        # ret += self._conjugate_specific_tense(verb_stem, tense)
+        return ret
+
+    def _conjugate_specific_tense(self, verb_stem, tense):
+        ret = '{}\n'.format(tense.name)
+        for pronoun in ('je', 'tu', 'il', 'nous', 'vous', 'ils'):
+            person = tense.find_person_by_pronoun(pronoun)
+            ending = person.get_ending()
+            ret += self._conjugate_specific_tense_pronoun(verb_stem, ending, pronoun)
+            ret += '\n'
         ret += '\n'
-    ret += '\n'
-    return ret
+        return ret
 
-
-def conjugate_specific_tense_pronoun(verb_stem, ending, pronoun):
-    ret = ''
-    conjugated_verb = verb_stem + ending
-    if pronoun == 'je' and starts_with_vowel(conjugated_verb):
-        ret += "j'"
-    else:
-        ret += pronoun + ' '
-    ret += u'{}'.format(conjugated_verb)
-    return ret
+    def _conjugate_specific_tense_pronoun(self, verb_stem, ending, pronoun):
+        ret = ''
+        conjugated_verb = verb_stem + ending
+        if pronoun == 'je' and starts_with_vowel(conjugated_verb):
+            ret += "j'"
+        else:
+            ret += pronoun + ' '
+        ret += u'{}'.format(conjugated_verb)
+        return ret

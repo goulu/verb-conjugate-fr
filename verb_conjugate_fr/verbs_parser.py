@@ -20,7 +20,9 @@ class VerbsParser:
     def __init__(self):
         self.verbs = []
         parser = etree.XMLParser(encoding='utf-8')
-        tree = etree.parse(resource_filename("verb_conjugate_fr", "data/verbs_fr.xml"),
+        tree = etree.parse(resource_filename(
+                           "verb_conjugate_fr",
+                           "data/verbs_fr.xml"),
                            parser)
         root = tree.getroot()
         if root.tag != 'verbs-fr':

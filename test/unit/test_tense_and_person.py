@@ -29,3 +29,9 @@ def test_tense_and_person():
     assert tense.find_person_by_pronoun('nous').get_ending() == 'yons'
     assert tense.find_person_by_pronoun('vous').get_ending() == 'yez'
     assert tense.find_person_by_pronoun('ils').get_ending() == 'ient'
+    assert tense.find_person_by_pronoun('on') \
+        == tense.find_person_by_pronoun('il') \
+        == tense.find_person_by_pronoun('elle')
+    third_person_sing_ending = tense.find_person_by_pronoun('on')
+    assert third_person_sing_ending.get_ending() == 'ie'
+    assert third_person_sing_ending.get_alternate_ending() == 'ye'
