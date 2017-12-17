@@ -7,12 +7,13 @@ Python French verb conjugation / Conjugaison des verbes français en Python
 * Has a command line interface
 * Coming soon: Flask web interface
 
-Build with setup.py or use tox to build (both py27 and p3) and run unit tests and linters.
+Build with setup.py or use tox to build (both py27 and p36) and run unit tests and linters.
 
 ```
-brett@ubuntu:~/Git/verb-conjugate-fr$ tox
+$ sudo apt-get install python-dev
+$ tox
 ...
-brett@ubuntu:~/Git/verb-conjugate-fr$ source .py3/bin/activate
+$ source .py3/bin/activate
 (.py3) brett@ubuntu:~/Git/verb-conjugate-fr$ confr manger
 Loaded 7000 verbs
 Loaded 132 conjugation templates
