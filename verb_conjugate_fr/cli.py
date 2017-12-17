@@ -40,7 +40,8 @@ def main():
     while True:
         print("Entrez un mot français pour conjuguer")
         print("Enter a French verb to conjugate")
-        verb = unicodefix(input())
-        if verb == 'exit':
+        user_input = unicodefix(input())
+        if user_input.lower() in ('exit', 'quit', 'q'):
             return
+        verb = user_input
         cli_try_conjugate(conjugator, verb)
