@@ -48,34 +48,31 @@ class Conjugator:
     def _get_full_conjugation_string_for_mood(self, verb_stem, template, mood_name):
         ret = ''
         mood = template.moods[mood_name]
-        tense = mood.tenses['present']
-        ret += self._conjugate_specific_tense(verb_stem, tense)
-        tense = mood.tenses['imperfect']
-        ret += self._conjugate_specific_tense(verb_stem, tense)
-        tense = mood.tenses['future']
-        ret += self._conjugate_specific_tense(verb_stem, tense)
-        tense = mood.tenses['simple-past']
-        ret += self._conjugate_specific_tense(verb_stem, tense)
+
+        for tense in ('present', 'imperfect', 'future', 'simple-past'):
+            tense_elem = mood.tenses[tense]
+            ret += tense + '\n'
+            ret += '\n'.join(self._conjugate_specific_tense(verb_stem, tense_elem))
+            ret += '\n'
+
         # mood = template.moods['participle']
         # tense = mood.tenses['present-participle']
         # ret += self._conjugate_specific_tense(verb_stem, tense)
         return ret
 
     def _conjugate_specific_tense(self, verb_stem, tense):
-        ret = '{}\n'.format(tense.name)
+        ret = []
         for pronoun in ('je', 'tu', 'il', 'nous', 'vous', 'ils'):
             person = tense.find_person_by_pronoun(pronoun)
             ending = person.get_ending()
-            ret += self._conjugate_specific_tense_pronoun(verb_stem, ending, pronoun)
-            ret += '\n'
-        ret += '\n'
+            ret.append(self._conjugate_specific_tense_pronoun(verb_stem, ending, pronoun))
         return ret
 
     def _conjugate_specific_tense_pronoun(self, verb_stem, ending, pronoun):
-        ret = ''
+        ret = u''
         conjugated_verb = verb_stem + ending
         if pronoun == 'je' and starts_with_vowel(conjugated_verb):
-            ret += "j'"
+            ret += u"j'"
         else:
             ret += pronoun + ' '
         ret += u'{}'.format(conjugated_verb)

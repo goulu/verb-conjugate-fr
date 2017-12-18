@@ -39,8 +39,8 @@ def test_conjugator_conjugate_specific_tense():
     tense_name = 'present'
     tense = Tense(tense_name, tense_elem)
     out = conj._conjugate_specific_tense(verb_stem, tense)
-    assert out == u"present\nje mange\ntu manges\nil mange\n" + \
-                  u"nous mangeons\nvous mangez\nils mangent\n\n"
+    assert len(out) == 6
+    assert out == [u"je mange", u"tu manges", u"il mange", u"nous mangeons", u"vous mangez", u"ils mangent"]
 
 
 @patch('verb_conjugate_fr.person_ending.PersonEnding')
