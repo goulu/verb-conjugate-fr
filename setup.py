@@ -24,7 +24,12 @@ setup(name=package,
       author='Brett Tolbert',
       author_email='bretttolbert@gmail.com',
       keywords=['french', 'verbs', 'conjugation', 'conjugator', 'language', 'linguistics'],
-      classifiers=[],
+      classifiers=[
+          'Development Status :: 2 - Pre-Alpha',
+          'License :: Freely Distributable',
+          'Natural Language :: French',
+          'Topic :: Text Processing :: Linguistic'
+      ],
       packages=find_packages(),
       install_requires=[required],
       include_package_data=True,

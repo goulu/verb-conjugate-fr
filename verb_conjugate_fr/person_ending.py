@@ -2,6 +2,7 @@
 
 
 class PersonEnding:
+
     """
     aka <p>
     Ending for a specific verb template, mood, tense and grammatical person

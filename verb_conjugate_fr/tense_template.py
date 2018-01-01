@@ -3,7 +3,7 @@
 from .person_ending import PersonEnding
 
 
-class Tense:
+class TenseTemplate:
     """
     Contains PersonEndings for a specific verb template, mood and tense
     Note: The template name and mood is only known by the Mood object
@@ -47,7 +47,7 @@ class Tense:
         for p_elem in tense_elem.findall('p'):
             self.persons.append(PersonEnding(p_elem))
 
-    def find_person_by_pronoun(self, pronoun):
+    def get_person_ending_by_pronoun(self, pronoun):
         pronoun = pronoun.lower()
         if self.name in ('present', 'imperfect', 'future', 'simple-past'):
             if pronoun == 'je':

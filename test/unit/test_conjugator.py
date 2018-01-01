@@ -11,9 +11,48 @@ from verb_conjugate_fr.conjugator import (
     ConjugatorError,
     get_verb_stem
 )
-from verb_conjugate_fr.tense import Tense
+from verb_conjugate_fr.tense_template import TenseTemplate
 
 conj = Conjugator()
+
+
+def test_conjugator_conjugate():
+    output = conj.conjugate(u"manger")
+    assert output == {
+        'moods': {
+            u'indicative': {
+                u'present': [
+                    u'je mange',
+                    u'tu manges',
+                    u'il mange',
+                    u'nous mangeons',
+                    u'vous mangez',
+                    u'ils mangent'
+                ], u'imperfect': [
+                    u'je mangeais',
+                    u'tu mangeais',
+                    u'il mangeait',
+                    u'nous mangions',
+                    u'vous mangiez',
+                    u'ils mangeaient'
+                ], u'future': [
+                    u'je mangerai',
+                    u'tu mangeras',
+                    u'il mangera',
+                    u'nous mangerons',
+                    u'vous mangerez',
+                    u'ils mangeront'
+                ], u'simple-past': [
+                    u'je mangeai',
+                    u'tu mangeas',
+                    u'il mangea',
+                    u'nous mangeâmes',
+                    u'vous mangeâtes',
+                    u'ils mangèrent'
+                ]
+            }
+        }
+    }
 
 
 def test_conjugator_get_full_conjugation_string():
@@ -37,7 +76,7 @@ def test_conjugator_conjugate_specific_tense():
         <p><i>gent</i></p>
         </present>""")
     tense_name = 'present'
-    tense = Tense(tense_name, tense_elem)
+    tense = TenseTemplate(tense_name, tense_elem)
     out = conj._conjugate_specific_tense(verb_stem, tense)
     assert len(out) == 6
     assert out == [u"je mange", u"tu manges", u"il mange", u"nous mangeons", u"vous mangez", u"ils mangent"]

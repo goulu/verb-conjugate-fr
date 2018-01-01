@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from .tense import Tense
+from .tense_template import TenseTemplate
 
 
 MOOD_TENSES = {
@@ -30,7 +30,7 @@ class Mood():
     name
         the name of the mood, e.g. "indicative"
     mood_elem
-        contains one or more tense_elems (see class Tense) with
+        contains one or more tense_elems (see class TenseTemplate) with
         tag names as listed in MOOD_TENSES
     """
     def __init__(self, name, mood_elem):
@@ -42,4 +42,4 @@ class Mood():
                 raise MoodError(
                     "failed to find expected tense '{}' for mood '{}'"
                     .format(tense_name, self.name))
-            self.tenses[tense_name] = Tense(tense_name, tense_elem)
+            self.tenses[tense_name] = TenseTemplate(tense_name, tense_elem)

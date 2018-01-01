@@ -24,3 +24,4 @@ venv/
 *-testcov/
 test/unit/__pycache__/
 __pycache__/
+test_stubs/
